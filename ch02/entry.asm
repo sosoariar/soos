@@ -1,10 +1,11 @@
-;彭东 @ 2021.01.09
+;GRUB 引导程序加载该程序后,如何读懂该部分代码,是通过协议约定的
+;让 GRUB 能识别我们的 Hello OS
 MBT_HDR_FLAGS EQU 0x00010003
 MBT_HDR_MAGIC EQU 0x1BADB002 ;多引导协议头魔数
 MBT_HDR2_MAGIC EQU 0xe85250d6 ;第二版多引导协议头魔数
 global _start ;导出_start符号
 extern main ;导入外部的main函数符号
-[section .start.text] ;定义.start.text代码节
+[section .start.text] ;定义.start.text 代码节
 [bits 32] ;汇编成32位代码
 _start:
 jmp _entry
