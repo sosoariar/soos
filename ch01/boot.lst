@@ -1,0 +1,19 @@
+     1                                  	org	07c00h			    ; 告诉编译器程序加载到7c00处
+     2 00000000 8CC8                    	mov	ax, cs
+     3 00000002 8ED8                    	mov	ds, ax
+     4 00000004 8EC0                    	mov	es, ax
+     5 00000006 E80200                  	call	DispStr			; 调用显示字符串例程
+     6 00000009 EBFE                    	jmp	$			        ; 无限循环
+     7                                  DispStr:
+     8 0000000B B8[1E00]                	mov	ax, BootMessage
+     9 0000000E 89C5                    	mov	bp, ax			; ES:BP = 串地址
+    10 00000010 B91000                  	mov	cx, 16			; CX = 串长度
+    11 00000013 B80113                  	mov	ax, 01301h		; AH = 13,  AL = 01h
+    12 00000016 BB0C00                  	mov	bx, 000ch		; 页号为0(BH = 0) 黑底红字(BL = 0Ch,高亮)
+    13 00000019 B200                    	mov	dl, 0
+    14 0000001B CD10                    	int	10h			; 10h 号中断
+    15 0000001D C3                      	ret
+    16 0000001E 48656C6C6F2C204F53-     BootMessage:		db	"Hello, OS world!"
+    16 00000027 20776F726C6421     
+    17 0000002E 00<rep 1D0h>            times 	510-($-$$)	db	0	; 填充剩下的空间，使生成的二进制代码恰好为512字节
+    18 000001FE 55AA                    dw 	0xaa55				; 结束标志
