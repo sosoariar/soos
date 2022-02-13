@@ -1,4 +1,4 @@
-	org	07c00h			    ; 告诉编译器程序加载到7c00处
+	org	07c00h			    ; 汇编伪指令ORG作用是定义程序或数据块的起始地址
 	mov	ax, cs
 	mov	ds, ax
 	mov	es, ax
