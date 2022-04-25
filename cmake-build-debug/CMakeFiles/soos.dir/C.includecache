@@ -6,7 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/cygdrive/d/WorkSpace/Clion/soos/main.c
+/cygdrive/d/Projects/Clion/soos/ch01/HelloWorld.c
+stdio.h
+/cygdrive/d/Projects/Clion/soos/ch01/stdio.h
+
+/cygdrive/d/Projects/Clion/soos/ch02/main.c
+vgastr.h
+/cygdrive/d/Projects/Clion/soos/ch02/vgastr.h
+
+/cygdrive/d/Projects/Clion/soos/ch02/vgastr.h
+
+/cygdrive/d/Projects/Clion/soos/main.c
 stdio.h
 -
 

@@ -3,4 +3,4 @@ project(soos C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(soos main.c ch01/HelloWorld.c ch02/main.c)
+add_executable(soos main.c Day01/HelloWorld.c Day01/main.c)

@@ -68,10 +68,10 @@ RM = /cygdrive/c/Users/Administrator/AppData/Local/JetBrains/CLion2020.2/cygwin_
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/d/WorkSpace/Clion/soos
+CMAKE_SOURCE_DIR = /cygdrive/d/Projects/Clion/soos
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/d/WorkSpace/Clion/soos/cmake-build-debug
+CMAKE_BINARY_DIR = /cygdrive/d/Projects/Clion/soos/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/d/WorkSpace/Clion/soos/cmake-build-debug/CMakeFiles /cygdrive/d/WorkSpace/Clion/soos/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles /cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/d/WorkSpace/Clion/soos/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,59 +143,59 @@ soos/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/build
 .PHONY : soos/fast
 
-ch01/HelloWorld.o: ch01/HelloWorld.c.o
+Day01/HelloWorld.o: Day01/HelloWorld.c.o
 
-.PHONY : ch01/HelloWorld.o
-
-# target to build an object file
-ch01/HelloWorld.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/ch01/HelloWorld.c.o
-.PHONY : ch01/HelloWorld.c.o
-
-ch01/HelloWorld.i: ch01/HelloWorld.c.i
-
-.PHONY : ch01/HelloWorld.i
-
-# target to preprocess a source file
-ch01/HelloWorld.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/ch01/HelloWorld.c.i
-.PHONY : ch01/HelloWorld.c.i
-
-ch01/HelloWorld.s: ch01/HelloWorld.c.s
-
-.PHONY : ch01/HelloWorld.s
-
-# target to generate assembly for a file
-ch01/HelloWorld.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/ch01/HelloWorld.c.s
-.PHONY : ch01/HelloWorld.c.s
-
-ch02/main.o: ch02/main.c.o
-
-.PHONY : ch02/main.o
+.PHONY : Day01/HelloWorld.o
 
 # target to build an object file
-ch02/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/ch02/main.c.o
-.PHONY : ch02/main.c.o
+Day01/HelloWorld.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/Day01/HelloWorld.c.o
+.PHONY : Day01/HelloWorld.c.o
 
-ch02/main.i: ch02/main.c.i
+Day01/HelloWorld.i: Day01/HelloWorld.c.i
 
-.PHONY : ch02/main.i
+.PHONY : Day01/HelloWorld.i
 
 # target to preprocess a source file
-ch02/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/ch02/main.c.i
-.PHONY : ch02/main.c.i
+Day01/HelloWorld.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/Day01/HelloWorld.c.i
+.PHONY : Day01/HelloWorld.c.i
 
-ch02/main.s: ch02/main.c.s
+Day01/HelloWorld.s: Day01/HelloWorld.c.s
 
-.PHONY : ch02/main.s
+.PHONY : Day01/HelloWorld.s
 
 # target to generate assembly for a file
-ch02/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/ch02/main.c.s
-.PHONY : ch02/main.c.s
+Day01/HelloWorld.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/Day01/HelloWorld.c.s
+.PHONY : Day01/HelloWorld.c.s
+
+Day01/main.o: Day01/main.c.o
+
+.PHONY : Day01/main.o
+
+# target to build an object file
+Day01/main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/Day01/main.c.o
+.PHONY : Day01/main.c.o
+
+Day01/main.i: Day01/main.c.i
+
+.PHONY : Day01/main.i
+
+# target to preprocess a source file
+Day01/main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/Day01/main.c.i
+.PHONY : Day01/main.c.i
+
+Day01/main.s: Day01/main.c.s
+
+.PHONY : Day01/main.s
+
+# target to generate assembly for a file
+Day01/main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/soos.dir/build.make CMakeFiles/soos.dir/Day01/main.c.s
+.PHONY : Day01/main.c.s
 
 main.o: main.c.o
 
@@ -233,12 +233,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... soos"
-	@echo "... ch01/HelloWorld.o"
-	@echo "... ch01/HelloWorld.i"
-	@echo "... ch01/HelloWorld.s"
-	@echo "... ch02/main.o"
-	@echo "... ch02/main.i"
-	@echo "... ch02/main.s"
+	@echo "... Day01/HelloWorld.o"
+	@echo "... Day01/HelloWorld.i"
+	@echo "... Day01/HelloWorld.s"
+	@echo "... Day01/main.o"
+	@echo "... Day01/main.i"
+	@echo "... Day01/main.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
