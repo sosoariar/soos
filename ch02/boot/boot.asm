@@ -44,3 +44,4 @@ int 0x10		; 输出: ch=光标开始行,cl=光标结束行
    message db "Hello MBR"
    times 510-($-$$) db 0
    db 0x55,0xaa
+

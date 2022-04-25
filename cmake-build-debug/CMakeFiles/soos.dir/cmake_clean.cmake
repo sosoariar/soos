@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/soos.dir/Day01/HelloWorld.c.o"
-  "CMakeFiles/soos.dir/Day01/main.c.o"
+  "CMakeFiles/soos.dir/ch01/HelloWorld.c.o"
+  "CMakeFiles/soos.dir/ch01/main.c.o"
   "CMakeFiles/soos.dir/main.c.o"
   "libsoos.dll.a"
   "soos.exe"

@@ -90,44 +90,44 @@ CMakeFiles/soos.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/soos.dir/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/d/Projects/Clion/soos/main.c -o CMakeFiles/soos.dir/main.c.s
 
-CMakeFiles/soos.dir/Day01/HelloWorld.c.o: CMakeFiles/soos.dir/flags.make
-CMakeFiles/soos.dir/Day01/HelloWorld.c.o: ../Day01/HelloWorld.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/soos.dir/Day01/HelloWorld.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/soos.dir/Day01/HelloWorld.c.o   -c /cygdrive/d/Projects/Clion/soos/Day01/HelloWorld.c
+CMakeFiles/soos.dir/ch01/HelloWorld.c.o: CMakeFiles/soos.dir/flags.make
+CMakeFiles/soos.dir/ch01/HelloWorld.c.o: ../ch01/HelloWorld.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/soos.dir/ch01/HelloWorld.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/soos.dir/ch01/HelloWorld.c.o   -c /cygdrive/d/Projects/Clion/soos/ch01/HelloWorld.c
 
-CMakeFiles/soos.dir/Day01/HelloWorld.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/soos.dir/Day01/HelloWorld.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/d/Projects/Clion/soos/Day01/HelloWorld.c > CMakeFiles/soos.dir/Day01/HelloWorld.c.i
+CMakeFiles/soos.dir/ch01/HelloWorld.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/soos.dir/ch01/HelloWorld.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/d/Projects/Clion/soos/ch01/HelloWorld.c > CMakeFiles/soos.dir/ch01/HelloWorld.c.i
 
-CMakeFiles/soos.dir/Day01/HelloWorld.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/soos.dir/Day01/HelloWorld.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/d/Projects/Clion/soos/Day01/HelloWorld.c -o CMakeFiles/soos.dir/Day01/HelloWorld.c.s
+CMakeFiles/soos.dir/ch01/HelloWorld.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/soos.dir/ch01/HelloWorld.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/d/Projects/Clion/soos/ch01/HelloWorld.c -o CMakeFiles/soos.dir/ch01/HelloWorld.c.s
 
-CMakeFiles/soos.dir/Day01/main.c.o: CMakeFiles/soos.dir/flags.make
-CMakeFiles/soos.dir/Day01/main.c.o: ../Day01/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/soos.dir/Day01/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/soos.dir/Day01/main.c.o   -c /cygdrive/d/Projects/Clion/soos/Day01/main.c
+CMakeFiles/soos.dir/ch01/main.c.o: CMakeFiles/soos.dir/flags.make
+CMakeFiles/soos.dir/ch01/main.c.o: ../ch01/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/soos.dir/ch01/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/soos.dir/ch01/main.c.o   -c /cygdrive/d/Projects/Clion/soos/ch01/main.c
 
-CMakeFiles/soos.dir/Day01/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/soos.dir/Day01/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/d/Projects/Clion/soos/Day01/main.c > CMakeFiles/soos.dir/Day01/main.c.i
+CMakeFiles/soos.dir/ch01/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/soos.dir/ch01/main.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/d/Projects/Clion/soos/ch01/main.c > CMakeFiles/soos.dir/ch01/main.c.i
 
-CMakeFiles/soos.dir/Day01/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/soos.dir/Day01/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/d/Projects/Clion/soos/Day01/main.c -o CMakeFiles/soos.dir/Day01/main.c.s
+CMakeFiles/soos.dir/ch01/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/soos.dir/ch01/main.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/d/Projects/Clion/soos/ch01/main.c -o CMakeFiles/soos.dir/ch01/main.c.s
 
 # Object files for target soos
 soos_OBJECTS = \
 "CMakeFiles/soos.dir/main.c.o" \
-"CMakeFiles/soos.dir/Day01/HelloWorld.c.o" \
-"CMakeFiles/soos.dir/Day01/main.c.o"
+"CMakeFiles/soos.dir/ch01/HelloWorld.c.o" \
+"CMakeFiles/soos.dir/ch01/main.c.o"
 
 # External object files for target soos
 soos_EXTERNAL_OBJECTS =
 
 soos.exe: CMakeFiles/soos.dir/main.c.o
-soos.exe: CMakeFiles/soos.dir/Day01/HelloWorld.c.o
-soos.exe: CMakeFiles/soos.dir/Day01/main.c.o
+soos.exe: CMakeFiles/soos.dir/ch01/HelloWorld.c.o
+soos.exe: CMakeFiles/soos.dir/ch01/main.c.o
 soos.exe: CMakeFiles/soos.dir/build.make
 soos.exe: CMakeFiles/soos.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable soos.exe"

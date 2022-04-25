@@ -74,10 +74,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/cygdrive/d/Projects/Clion/soos/Day01/HelloWorld.c">
+		<Unit filename="/cygdrive/d/Projects/Clion/soos/ch01/HelloWorld.c">
 			<Option target="soos"/>
 		</Unit>
-		<Unit filename="/cygdrive/d/Projects/Clion/soos/Day01/main.c">
+		<Unit filename="/cygdrive/d/Projects/Clion/soos/ch01/main.c">
 			<Option target="soos"/>
 		</Unit>
 		<Unit filename="/cygdrive/d/Projects/Clion/soos/main.c">
