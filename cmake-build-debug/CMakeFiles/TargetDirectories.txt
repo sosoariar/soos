@@ -1,3 +1,0 @@
-/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles/soos.dir
-/cygdrive/d/Projects/Clion/soos/cmake-build-debug/CMakeFiles/edit_cache.dir
