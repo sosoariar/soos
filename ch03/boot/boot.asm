@@ -1,6 +1,4 @@
-; 主引导程序
-;
-SECTION MBR vstart=0x7c00 ; SECTION名MBR , SECTION 起始地址 0x7c00
+SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
     mov ax,cs
     mov ds,ax
     mov es,ax
