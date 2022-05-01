@@ -37,6 +37,7 @@ SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
    mov byte [gs:0x08],'R'
    mov byte [gs:0x09],0xA4
 
+   ; 在寄存器中定义了几个参数,参数有什么作用,还是要看具体逻辑
    mov eax,LOADER_START_SECTOR  ;
    mov bx,LOADER_BASE_ADDR
    mov cx,1
