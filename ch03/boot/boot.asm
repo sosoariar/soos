@@ -48,7 +48,14 @@ SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
 rd_disk_m_16:
     mov esi,eax
     mov di,cx
-    
+
+;读写硬盘:
+;第1步：设置要读取的扇区数, 即将扇区数量通过IO端口输出
+    mov dx,0x172         ;选择通道,往该通道的sector count寄存器中写入待操作的扇区数,bochsrc.disk 中配置了硬盘的端口
+    mov al,cl
+    out dx,al            ;读取的扇区数
+    mov eax,esi	   ;恢复ax
+
    times 510-($-$$) db 0
    db 0x55,0xaa
 
