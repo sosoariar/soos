@@ -52,8 +52,11 @@ rd_disk_m_16:
 
 ;从硬盘中读数据:
 ;向硬盘发送要读数据的请求
-;第1步：设置要读取的扇区数, 即将扇区数量通过IO端口输出
-    mov dx,0x172         ;选择通道,往该通道的sector count寄存器中写入待操作的扇区数,bochsrc.disk 中配置了硬盘的端口
+
+;第1步：bochsrc.disk 中硬盘设置
+;ata0: enabled=true, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+;即起始地址为 0x1f0
+    mov dx,0x1f2         ;该位置可以指定读取的扇区数
     mov al,cl
     out dx,al            ;读取的扇区数
     mov eax,esi	   ;恢复ax
