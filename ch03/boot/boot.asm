@@ -55,6 +55,29 @@ rd_disk_m_16:
     mov al,cl
     out dx,al            ;读取的扇区数
     mov eax,esi	   ;恢复ax
+; 往该通道上的三个LBA寄存器写入扇区起始地址的低24位
+    ;LBA地址7~0位写入端口0x1f3
+    mov dx,0x173
+    out dx,al
+
+    ;LBA地址15~8位写入端口0x1f4
+    mov cl,8
+    shr eax,cl
+    mov dx,0x174
+    out dx,al
+
+    ;LBA地址23~16位写入端口0x1f5
+    shr eax,cl
+    mov dx,0x175
+    out dx,al
+    ; 往device 寄存器中写入LBA 地址的24～27 位，并置第6 位为l ，使其为LBA 模式，设置第4
+    ;位，选择操作的硬盘（ master 硬盘或slave 硬盘）。
+    shr eax,cl
+    and al,0x07	   ;lba第24~27位
+    or al,0xe0	   ; 设置7～4位为1110,表示lba模式
+    mov dx,0x176
+    out dx,al
+
 
    times 510-($-$$) db 0
    db 0x55,0xaa
