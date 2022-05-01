@@ -1,4 +1,4 @@
-%include "boot.inc"
+%include "boot.inc" ; nasm编译器提供的预处理指令
 SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
     mov ax,cs
     mov ds,ax
@@ -44,7 +44,11 @@ SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
    call rd_disk_m_16
    jmp LOADER_BASE_ADDR ;程序悬停后,内存中数据不被清理,不断在显示器上刷新
 
-
+;读取硬盘N扇区
+rd_disk_m_16:
+    mov esi,eax
+    mov di,cx
+    
    times 510-($-$$) db 0
    db 0x55,0xaa
 
