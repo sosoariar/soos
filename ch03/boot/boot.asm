@@ -1,3 +1,4 @@
+%include "boot.inc"
 SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
     mov ax,cs
     mov ds,ax
@@ -36,7 +37,13 @@ SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
    mov byte [gs:0x08],'R'
    mov byte [gs:0x09],0xA4
 
-   jmp $ ;程序悬停后,内存中数据不被清理,不断在显示器上刷新
+   mov eax,LOADER_START_SECTOR
+   mov bx,LOADER_BASE_ADDR
+   mov cx,1
+
+   call rd_disk_m_16
+   jmp LOADER_BASE_ADDR ;程序悬停后,内存中数据不被清理,不断在显示器上刷新
+
 
    times 510-($-$$) db 0
    db 0x55,0xaa
