@@ -1,109 +1,111 @@
+;主引导程序
 %include "boot.inc"
+SECTION MBR vstart=0x7c00
+   mov ax,cs
+   mov ds,ax
+   mov es,ax
+   mov ss,ax
+   mov fs,ax
+   mov sp,0x7c00
+   mov ax,0xb800
+   mov gs,ax
 
-section loader vstart=LOADER_BASE_ADDR
-    LOADER_STACK_TOP equ LOADER_BASE_ADDR
-    jmp loader_start
+   mov     ax, 0600h
+   mov     bx, 0700h
+   mov     cx, 0
+   mov     dx, 184fh
+   int     10h
 
-;构建gdt及其内部的描述符
-;全局描述符表GDT是一片内存区域,每隔8个字节便是一个表现,dd 可以定义一个4字节,下面定义方式是高,低两个4字节
+   ; 输出字符串:MBR
+   mov byte [gs:0x00],'1'
+   mov byte [gs:0x01],0xA4
 
-; 起始地址
-GDT_BASE:
-    dd    0x00000000
-    dd    0x00000000
+   mov byte [gs:0x02],' '
+   mov byte [gs:0x03],0xA4
 
-CODE_DESC:
-    dd    0x0000FFFF
-    dd    DESC_CODE_HIGH4
+   mov byte [gs:0x04],'M'
+   mov byte [gs:0x05],0xA4	   ;A表示绿色背景闪烁，4表示前景色为红色
 
-;数据段和栈段共同使用一个段描述符,栈是向下扩展,数据段是向上扩展
-DATA_STACK_DESC:
-    dd    0x0000FFFF
-    dd    DESC_DATA_HIGH4
+   mov byte [gs:0x06],'B'
+   mov byte [gs:0x07],0xA4
 
-VIDEO_DESC:
-    dd    0x80000007	       ;limit=(0xbffff-0xb8000)/4k=0x7
-    dd    DESC_VIDEO_HIGH4
+   mov byte [gs:0x08],'R'
+   mov byte [gs:0x09],0xA4
 
-GDT_SIZE   equ   $ - GDT_BASE
-GDT_LIMIT   equ   GDT_SIZE -	1
-times 60 dq 0					 ; 此处预留60个描述符的slot
+   mov eax,LOADER_START_SECTOR	 ; 起始扇区lba地址
+   mov bx,LOADER_BASE_ADDR       ; 写入的地址
+   mov cx,4			 ; 待读入的扇区数
+   call rd_disk_m_16		 ; 以下读取程序的起始部分（一个扇区）
 
-SELECTOR_CODE equ (0x0001<<3) + TI_GDT + RPL0     ; (CODE_DESC - GDT_BASE)/8 + TI_GDT + RPL0
-SELECTOR_DATA equ (0x0002<<3) + TI_GDT + RPL0	 ; 同上
-SELECTOR_VIDEO equ (0x0003<<3) + TI_GDT + RPL0	 ; 同上
+   jmp LOADER_BASE_ADDR
 
-; 定义全局描述符表 GDT 的指针,此指针是 lgdt 加载 GDT 到 gdtr 寄存器时用的,
-gdt_ptr
-    dw  GDT_LIMIT
-    dd  GDT_BASE
+;-------------------------------------------------------------------------------
+;功能:读取硬盘n个扇区
+rd_disk_m_16:
+;-------------------------------------------------------------------------------
+				       ; eax=LBA扇区号
+				       ; ebx=将数据写入的内存地址
+				       ; ecx=读入的扇区数
+      mov esi,eax	  ;备份eax
+      mov di,cx		  ;备份cx
+;读写硬盘:
+;第1步：设置要读取的扇区数
+      mov dx,0x1f2
+      mov al,cl
+      out dx,al            ;读取的扇区数
 
-loadermsg db '2 loader in real.'
+      mov eax,esi	   ;恢复ax
 
-loader_start:
-    mov byte [gs:160],'2'
-    mov byte [gs:161],0xA4
+;第2步：将LBA地址存入0x1f3 ~ 0x1f6
 
-    mov byte [gs:162],' '
-    mov byte [gs:163],0xA4
+      ;LBA地址7~0位写入端口0x1f3
+      mov dx,0x1f3
+      out dx,al
 
-    mov byte [gs:164],'L'
-    mov byte [gs:165],0xA4
+      ;LBA地址15~8位写入端口0x1f4
+      mov cl,8
+      shr eax,cl
+      mov dx,0x1f4
+      out dx,al
 
-    mov byte [gs:166],'O'
-    mov byte [gs:167],0xA4
+      ;LBA地址23~16位写入端口0x1f5
+      shr eax,cl
+      mov dx,0x1f5
+      out dx,al
 
-    mov byte [gs:168],'A'
-    mov byte [gs:169],0xA4
+      shr eax,cl
+      and al,0x0f	   ;lba第24~27位
+      or al,0xe0	   ; 设置7～4位为1110,表示lba模式
+      mov dx,0x1f6
+      out dx,al
 
-    mov byte [gs:170],'D'
-    mov byte [gs:171],0xA4
+;第3步：向0x1f7端口写入读命令，0x20
+      mov dx,0x1f7
+      mov al,0x20
+      out dx,al
 
-    mov byte [gs:172],'E'
-    mov byte [gs:173],0xA4
+;第4步：检测硬盘状态
+  .not_ready:
+      ;同一端口，写时表示写入命令字，读时表示读入硬盘状态
+      nop
+      in al,dx
+      and al,0x88	   ;第4位为1表示硬盘控制器已准备好数据传输，第7位为1表示硬盘忙
+      cmp al,0x08
+      jnz .not_ready	   ;若未准备好，继续等。
 
-    mov byte [gs:174],'R'
-    mov byte [gs:175],0xA4
+;第5步：从0x1f0端口读数据
+      mov ax, di
+      mov dx, 256
+      mul dx
+      mov cx, ax	   ; di为要读取的扇区数，一个扇区有512字节，每次读入一个字，
+			   ; 共需di*512/2次，所以di*256
+      mov dx, 0x1f0
+  .go_on_read:
+      in ax,dx
+      mov [bx],ax
+      add bx,2
+      loop .go_on_read
+      ret
 
-   mov	 sp, LOADER_BASE_ADDR
-   mov	 bp, loadermsg
-   mov	 cx, 17
-   mov	 ax, 0x1301
-   mov	 bx, 0x001f
-   mov	 dx, 0x1800
-   int	 0x10
-
-;----   准备进入保护模式   ----
-;1 打开A20
-;2 加载gdt
-;3 将cr0的pe位置1
-
-;-----------------  打开A20  ----------------
-in al,0x92
-or al,0000_0010B
-out 0x92,al
-
-;-----------------  加载GDT  ----------------
-lgdt [gdt_ptr]
-
-
-;-----------------  cr0  ----------------
-mov eax, cr0
-or eax, 0x00000001
-mov cr0, eax
-
-jmp  SELECTOR_CODE:p_mode_start
-
-[bits 32]
-p_mode_start:
-    mov ax, SELECTOR_DATA
-    mov ds, ax
-    mov es, ax
-    mov ss, ax
-    mov esp,LOADER_STACK_TOP
-    mov ax, SELECTOR_VIDEO
-    mov gs, ax
-
-mov byte [gs:320], 'P'
-
-jmp $
+   times 510-($-$$) db 0
+   db 0x55,0xaa
