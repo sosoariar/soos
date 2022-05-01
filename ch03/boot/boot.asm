@@ -83,6 +83,16 @@ rd_disk_m_16:
     mov al,0x20
     out dx,al
 
+;第4步：检测硬盘状态
+  .not_ready:
+      ;同一端口，写时表示写入命令字，读时表示读入硬盘状态
+      nop
+      in al,dx
+      and al,0x88	   ;第4位为1表示硬盘控制器已准备好数据传输，第7位为1表示硬盘忙
+      cmp al,0x08
+      jnz .not_ready	   ;若未准备好，继续等。
+
+
    times 510-($-$$) db 0
    db 0x55,0xaa
 
