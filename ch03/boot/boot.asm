@@ -78,6 +78,10 @@ rd_disk_m_16:
     mov dx,0x176
     out dx,al
 
+;第3步：向硬盘发出读命令，0x20
+    mov dx,0x177
+    mov al,0x20
+    out dx,al
 
    times 510-($-$$) db 0
    db 0x55,0xaa
