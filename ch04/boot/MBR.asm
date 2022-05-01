@@ -40,7 +40,7 @@ SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
    ; 在寄存器中定义了几个参数,参数有什么作用,还是要看具体逻辑
    mov eax,LOADER_START_SECTOR  ;
    mov bx,LOADER_BASE_ADDR
-   mov cx,1
+   mov cx,4 ; loader.asm 文件变大,增加读取硬盘的范围
 
    call rd_disk_m_16
    jmp LOADER_BASE_ADDR ;程序悬停后,内存中数据不被清理,不断在显示器上刷新
