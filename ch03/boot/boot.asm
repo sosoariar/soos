@@ -37,7 +37,7 @@ SECTION MBR vstart=0x7c00 ; 该SECTION在内存的起始地址 0x7c00
    mov byte [gs:0x08],'R'
    mov byte [gs:0x09],0xA4
 
-   mov eax,LOADER_START_SECTOR
+   mov eax,LOADER_START_SECTOR  ;
    mov bx,LOADER_BASE_ADDR
    mov cx,1
 
@@ -49,14 +49,15 @@ rd_disk_m_16:
     mov esi,eax
     mov di,cx
 
-;读写硬盘:
+;从硬盘中读数据:
+;向硬盘发送要读数据的请求
 ;第1步：设置要读取的扇区数, 即将扇区数量通过IO端口输出
     mov dx,0x172         ;选择通道,往该通道的sector count寄存器中写入待操作的扇区数,bochsrc.disk 中配置了硬盘的端口
     mov al,cl
     out dx,al            ;读取的扇区数
     mov eax,esi	   ;恢复ax
 ; 往该通道上的三个LBA寄存器写入扇区起始地址的低24位
-    ;LBA地址7~0位写入端口0x1f3
+    ;LBA地址7~0位写入端口0x173
     mov dx,0x173
     out dx,al
 
@@ -92,6 +93,13 @@ rd_disk_m_16:
       cmp al,0x08
       jnz .not_ready	   ;若未准备好，继续等。
 
+;第5步：硬盘状态准备好后,开始从指定端口读取数据
+      mov ax, di
+      mov dx, 256
+      mul dx
+      mov cx, ax	   ; di为要读取的扇区数，一个扇区有512字节，每次读入一个字，
+			   ; 共需di*512/2次，所以di*256
+      mov dx, 0x170
 
    times 510-($-$$) db 0
    db 0x55,0xaa
