@@ -23,7 +23,7 @@ nasm -I include/ -o ./out/MBR.bin MBR.asm
 dd if=./out/MBR.bin of=./hd.img bs=512 count=1  conv=notrunc
 
 #----------------step-5 asm -----------------
-# nasm -I include/ -o ./out/loader.bin loader.S
+nasm -I include/ -o ./out/loader.bin loader.asm
 
 #----------------step-6 write bin into .img -----------------
-# dd if=./out/loader.bin of=./hd.img bs=512 count=1 seek=2 conv=notrunc
+dd if=./out/loader.bin of=./hd.img bs=512 count=1 seek=2 conv=notrunc
