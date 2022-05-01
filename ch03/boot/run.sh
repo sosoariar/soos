@@ -23,4 +23,4 @@ fi
 echo "check over ...."
 sleep 1
 echo "run........"
-/usr/bin/bochs -f bochsrc.disk
+/usr/bin/bochs -f /root/OraginOS/bochsrc.disk
