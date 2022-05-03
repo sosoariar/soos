@@ -19,32 +19,22 @@ SECTION MBR vstart=0x7c00 ; 源代码编译后在内存中的起始地址
    mov dx, 0x184f	     ;
    int 0x10            ; int 0x10
 
-; 直接操作显存地址
-    mov byte [gs:0x00],'H'
-    mov byte [gs:0x01],0xA4
+; 功能号: 0x03 光标相关
+   mov ah, 3
+   mov bh, 0
+   int 0x10
 
-    mov byte [gs:0x02],'E'
-    mov byte [gs:0x03],0xA4
+; 功能号: 0x13 打印字符串
+   mov ax, message
+   mov bp, ax		; 对应功能号中断触发时,显示的数据从 ES:BP获得
 
-    mov byte [gs:0x04],'L'
-    mov byte [gs:0x05],0xA4
-
-    mov byte [gs:0x06],'L'
-    mov byte [gs:0x07],0xA4
-
-    mov byte [gs:0x08],'O'
-    mov byte [gs:0x09],0xA4
-
-    mov byte [gs:0x0A],'M'
-    mov byte [gs:0x0B],0xA4
-
-    mov byte [gs:0x0C],'B'
-    mov byte [gs:0x0D],0xA4
-
-    mov byte [gs:0x0E],'R'
-    mov byte [gs:0x0F],0xA4
+   mov cx, 10		; 显示的字符数
+   mov ax, 0x1301
+   mov bx, 0x2
+   int 0x10
 
    jmp $	;程序悬停
 
+   message db "Hello MBR!"
    times 510-($-$$) db 0
    db 0x55,0xaa
