@@ -49,7 +49,7 @@ SECTION MBR vstart=0x7c00 ; 源代码编译后在内存中的起始地址
 
    mov eax,LOADER_START_SECTOR
    mov bx,LOADER_BASE_ADDR
-   mov cx,1
+   mov cx,4
    call rd_disk_m_16
 
    jmp LOADER_BASE_ADDR

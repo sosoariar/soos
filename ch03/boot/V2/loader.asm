@@ -2,6 +2,11 @@
 %include "boot.inc"
 section loader vstart=LOADER_BASE_ADDR
 
+jmp loader_start
+
+loadermsg db 'HELLO LOADER IN REAL'
+
+loader_start:
 ; 字符串"HELLO LOADER"
 mov byte [gs:0x20],'H'
 mov byte [gs:0x21],0x07
