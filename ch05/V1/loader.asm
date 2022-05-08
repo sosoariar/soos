@@ -52,6 +52,22 @@ loader_start:
     cmp ebx, 0		      ;若ebx为0且cf不为1,这说明ards全部返回，当前已是最后一个
     jnz .e820_mem_get_loop
 
+; 执行到此处,说明通过BIOS中断获得了物理内存结构的数据
+; 下面的代码找出最大的内存块
+.find_max_mem_area:
+   mov eax, [ebx]	      ;base_add_low
+   add eax, [ebx+8]	      ;length_low
+   add ebx, 20		      ;指向缓冲区中下一个ARDS结构
+   cmp edx, eax		      ;冒泡排序，找出最大,edx寄存器始终是最大的内存容量
+   jge .next_ards
+   mov edx, eax		      ;edx为总内存大小
+.next_ards:
+   loop .find_max_mem_area
+   jmp .mem_get_ok
+
+
+
+
 
 
 ;----------------------------------------   准备进入保护模式   ------------------------------------------
