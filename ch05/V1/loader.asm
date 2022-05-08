@@ -66,7 +66,8 @@ loader_start:
    jmp .mem_get_ok
 
 
-
+.mem_get_ok:
+   mov [total_mem_bytes], edx	 ;将内存换为byte单位后存入total_mem_bytes处。
 
 
 
