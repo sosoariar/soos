@@ -42,6 +42,16 @@ loader_start:
     mov edx, 0x534d4150	        ;edx只赋值一次，循环体中不会改变
     mov di, ards_buf	        ;ards结构缓冲区
 
+; 循环获取每个ARDS内存范围描述结构
+    mov eax, 0x0000e820
+    mov ecx, 20		      ;ARDS大小是20字节
+    int 0x15
+    jc .e820_failed_so_try_e801   ;若cf==1,则E820模式失效,跳转到0xe801,尝试从此处开始操作
+    add di, cx		      ;使di增加20字节指向缓冲区中新的ARDS结构位置
+    inc word [ards_nr]	  ;记录ARDS数量
+    cmp ebx, 0		      ;若ebx为0且cf不为1,这说明ards全部返回，当前已是最后一个
+    jnz .e820_mem_get_loop
+
 
 
 ;----------------------------------------   准备进入保护模式   ------------------------------------------
