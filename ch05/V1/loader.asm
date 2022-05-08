@@ -89,6 +89,20 @@ loader_start:
    mov edx,esi		;edx为总内存大小
    jmp .mem_get_ok
 
+; 0x88 模式
+.e801_failed_so_try88:
+   mov  ah, 0x88
+   int  0x15
+   jc .error_hlt
+   and eax,0x0000FFFF
+
+   ;16位乘法，被乘数是ax,积为32位.积的高16位在dx中，积的低16位在ax中
+   mov cx, 0x400     ;0x400等于1024,将ax中的内存容量换为以byte为单位
+   mul cx
+   shl edx, 16	     ;把dx移到高16位
+   or edx, eax	     ;把积的低16位组合到edx,为32位的积
+   add edx,0x100000  ;0x88子功能只会返回1MB以上的内存,故实际内存大小要加上1MB
+
 .mem_get_ok:
    mov [total_mem_bytes], edx	 ;将内存换为byte单位后存入total_mem_bytes处。
 
