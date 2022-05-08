@@ -65,6 +65,29 @@ loader_start:
    loop .find_max_mem_area
    jmp .mem_get_ok
 
+;E801h 模式
+.e820_failed_so_try_e801:
+   mov ax,0xe801
+   int 0x15
+   jc .e801_failed_so_try88   ;若当前e801方法失败,就尝试0x88方法
+
+;1 先算出低15M的内存,ax和cx中是以KB为单位的内存数量,将其转换为以byte为单位
+   mov cx,0x400	     ;cx和ax值一样,cx用做乘数
+   mul cx
+   shl edx,16
+   and eax,0x0000FFFF
+   or edx,eax
+   add edx, 0x100000 ;ax只是15MB,故要加1MB
+   mov esi,edx	     ;先把低15MB的内存容量存入esi寄存器备份
+
+;2 再将16MB以上的内存转换为byte为单位,寄存器bx和dx中是以64KB为单位的内存数量
+   xor eax,eax
+   mov ax,bx
+   mov ecx, 0x10000	;0x10000十进制为64KB
+   mul ecx		    ;32位乘法,默认的被乘数是eax,积为64位,高32位存入edx,低32位存入eax.
+   add esi,eax		;由于此方法只能测出4G以内的内存,故32位eax足够了,edx肯定为0,只加eax便可
+   mov edx,esi		;edx为总内存大小
+   jmp .mem_get_ok
 
 .mem_get_ok:
    mov [total_mem_bytes], edx	 ;将内存换为byte单位后存入total_mem_bytes处。
