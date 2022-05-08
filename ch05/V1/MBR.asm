@@ -1,4 +1,3 @@
-; 加载第二个扇区数据
 %include "boot.inc"
 SECTION MBR vstart=0x7c00 ; 源代码编译后在内存中的起始地址
    mov ax,cs              ; CS:IP 默认是顺序执行的,同样这条指令也会顺序存储在0x7c00向上扩展的地址中
@@ -11,13 +10,11 @@ SECTION MBR vstart=0x7c00 ; 源代码编译后在内存中的起始地址
    mov gs,ax
 
 ; BIOS 0x10 中断
-; 从寄存器AX,BX,CX,DX中得到需要执行什么功能
-
 ; 功能号0x60 清屏+初始化屏幕大小,具体数据代表的内容可以help
    mov ax, 0x0600
    mov bx, 0x0700
-   mov cx, 0           ;
-   mov dx, 0x184f	     ;
+   mov cx, 0
+   mov dx, 0x184f
    int 0x10            ; int 0x10
 
 ; 直接操作显存地址
@@ -32,7 +29,6 @@ SECTION MBR vstart=0x7c00 ; 源代码编译后在内存中的起始地址
     mov byte [gs:0x0F],0X07
 
 ; 以上的内容相当于一个路标,表示程序正常运行到此处了
-
    mov eax,LOADER_START_SECTOR
    mov bx,LOADER_BASE_ADDR
    mov cx,4
