@@ -3,6 +3,7 @@
 LOADER_BASE_ADDR equ 0x900
 LOADER_START_SECTOR equ 0x2
 
+; 页目录表放置在物理内存 0x100000
 PAGE_DIR_TABLE_POS equ 0x100000 ;二级页目录表，页表放在内存中1M起始位置连续存放，尽可能简单
 
 ;--------------   gdt描述符属性  -------------
