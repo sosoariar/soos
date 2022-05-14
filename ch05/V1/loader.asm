@@ -27,8 +27,7 @@ LOADER_STACK_TOP equ LOADER_BASE_ADDR
     total_men_bytes dd 0 ;4字节变量
 
     gdt_ptr  dw  GDT_LIMIT
-        dd  GDT_BASE
-
+            dd  GDT_BASE
 ;定义一个缓冲区
 ;人工对齐:total_mem_bytes4字节+gdt_ptr6字节+ards_buf244字节+ards_nr2,共256字节
     ards_buf times 244 db 0
@@ -36,8 +35,7 @@ LOADER_STACK_TOP equ LOADER_BASE_ADDR
 
 loader_start:
 ;edx 的赋值,是为了初始化内存硬件的操作方式
-;edx = 534D4150h ('SMAP') 获取内存布局
-
+;edx = 534D4150h ('SMAP') 硬件固定的初始化方式
     xor ebx, ebx		        ;置ebx为0
     mov edx, 0x534d4150	        ;edx只赋值一次，循环体中不会改变
     mov di, ards_buf	        ;ards结构缓冲区
@@ -123,7 +121,10 @@ loader_start:
     or eax, 0x00000001
     mov cr0, eax
 
-    jmp dword SELECTOR_CODE:p_mode_start
+    jmp dword SELECTOR_CODE:p_mode_start ; 刷新流水线，避免分支预测的影响,这种cpu优化策略，最怕jmp跳转，这将导致之前做的预测失效，从而起到了刷新的作用
+
+.error_hlt:		      ;出错则挂起
+   hlt
 
 ; 在32位保护模式下, 通过SELECTOR_DATA 可以得到类似实模式下寄存器的值,
 ; 下面这段程序类似实模式下操作段寄存器,只不过现在是通过SELECTOR来定位地址
