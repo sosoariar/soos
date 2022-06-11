@@ -1,1 +1,1 @@
-/root/proc/bochs/bin/bochs -f /root/projects/OrangeOS/bochsrc.disk
+bochs -f ./bochsrc.disk
