@@ -32,7 +32,7 @@ SECTION MBR vstart=0x7c00
    mov cx,4			             ; 待读入的扇区数
    call rd_disk_m_16		     ; 以下读取程序的起始部分（一个扇区）
 
-   jmp LOADER_BASE_ADDR
+   jmp LOADER_BASE_ADDR + 0x300
 
 ;-------------------------------------------------------------------------------
 ;功能:读取硬盘n个扇区
@@ -50,7 +50,7 @@ rd_disk_m_16:
       out dx,al        ;读取的扇区数
       mov eax,esi	   ;恢复ax
 
-;第2步：将LBA地址存入0x1f3 ~ 0x1f6
+;第2步:将LBA地址存入0x1f3 ~ 0x1f6
 ;LBA地址7~0位写入端口0x1f3
       mov dx,0x1f3
       out dx,al

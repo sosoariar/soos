@@ -1,7 +1,7 @@
 %include "boot.inc"
 
 section loader vstart=LOADER_BASE_ADDR
-LOADER_STACK_TOP equ LOADER_BASE_ADDR   ;栈区的起始地址,为什么是这个地址?
+LOADER_STACK_TOP equ LOADER_BASE_ADDR
 
 ; --------------------------------- GDT 构建 ---------------------------------
 ; 构建gdt及其内部的描述符
@@ -37,6 +37,11 @@ times 60 dq 0                   ; 预留空间,方便后续更新代码段
 SELECTOR_CODE   equ     (0x0001<<3) + TI_GDT + RPL0     ; (CODE_DESC - GDT_BASE)/8 + TI_GDT + RPL0
 SELECTOR_DATA   equ     (0x0002<<3) + TI_GDT + RPL0	    ; 同上
 SELECTOR_VIDEO  equ     (0x0003<<3) + TI_GDT + RPL0	    ; 同上
+
+; total_mem_bytes用于保存内存容量,以字节为单位,此位置比较好记。
+; 当前偏移loader.bin文件头0x200字节,loader.bin的加载地址是0x900,
+; 故total_mem_bytes内存中的地址是0xb00.将来在内核中咱们会引用此地址
+total_mem_bytes dd 0
 
 ; 定义全局描述符表 GDT 的指针,此指针是 lgdt 加载 GDT 到 gdtr 寄存器时用的,
 gdt_ptr
@@ -158,6 +163,6 @@ p_mode_start:
     mov ax, SELECTOR_VIDEO
     mov gs, ax
 
-mov byte [gs:160], 'P'
-
-jmp $
+    mov byte [gs:0x08],'R'
+    mov byte [gs:0x09],0xA4
+    jmp $
