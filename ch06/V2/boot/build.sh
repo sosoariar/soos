@@ -30,11 +30,12 @@ dd if=./out/MBR.bin of=./hd.img bs=512 count=1  conv=notrunc
 nasm -I include/ -o ./out/loader.bin loader.asm
 dd if=./out/loader.bin of=./hd.img bs=512 count=4 seek=2 conv=notrunc
 
-gcc -c -o out/kernel/main.o kernel/main.c
+nasm -f elf -o ./out/kernel/print.o ./lib/kernel/print.asm
+
+gcc -m32 -I ./lib/kernel/ -c -o ./out/kernel/main.o ./kernel/main.c
 
 # 最终生产的可执行文件的起始虚拟地址，可以用-Ttext参数来指定
-/usr/bin/ld out/kernel/main.o -Ttext 0xc0001500 -e main -o out/kernel/kernel.bin
-
+ld -melf_i386  -Ttext 0xc0001500 -e main -o ./out/kernel/kernel.bin out/kernel/main.o out/kernel/print.o
 
 #----------------step-6 write bin into .img -----------------
 dd if=./out/kernel/kernel.bin of=./hd.img bs=512 count=200 seek=9 conv=notrunc
