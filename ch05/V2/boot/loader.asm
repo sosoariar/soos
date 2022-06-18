@@ -173,9 +173,16 @@ p_mode_start:
 ;-------------   创建页目录及页表   ---------------
 setup_page:
 ;先把页目录占用的空间逐字节清0
-   mov ecx, 4096
+   mov ecx, 4096    ;页目录表大小4KB,循环执行4096次清零操作
    mov esi, 0
 .clear_page_dir:
    mov byte [PAGE_DIR_TABLE_POS + esi], 0
    inc esi
    loop .clear_page_dir
+
+;开始创建页目录项(PDE)
+.create_pde:
+   mov eax, PAGE_DIR_TABLE_POS
+   add eax, 0x1000 			     ; 此时eax为第一个页表的位置及属性
+   mov ebx, eax
+
