@@ -4,6 +4,7 @@ SELECTOR_VIDEO equ (0x0003<<3) + TI_GDT + RPL0
 
 [bits 32]
 section .text
+put_int_buffer    dq    0     ; 定义8字节缓冲区用于数字到字符的转换
 
 ;--------------------------------------------
 ;put_str 通过put_char来打印以0字符结尾的字符串
