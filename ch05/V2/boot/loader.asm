@@ -163,6 +163,19 @@ p_mode_start:
     mov ax, SELECTOR_VIDEO
     mov gs, ax
 
-    mov byte [gs:0x08],'R'
-    mov byte [gs:0x09],0xA4
+    ; 创建页目录及页表并初始化页内存位图
+    call setup_page
+
     jmp $
+
+
+
+;-------------   创建页目录及页表   ---------------
+setup_page:
+;先把页目录占用的空间逐字节清0
+   mov ecx, 4096
+   mov esi, 0
+.clear_page_dir:
+   mov byte [PAGE_DIR_TABLE_POS + esi], 0
+   inc esi
+   loop .clear_page_dir
