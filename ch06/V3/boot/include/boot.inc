@@ -1,10 +1,9 @@
-; 全局参数配置
+;---- loader 宏参数 ----
+LOADER_BASE_ADDR        equ 0x900
+LOADER_STACK_TOP        equ LOADER_BASE_ADDR
+LOADER_START_SECTOR     equ 0x2
 
-;---- loader ----
-LOADER_BASE_ADDR    equ 0x900  ;实模式下一块可用的内存地址
-LOADER_STACK_TOP    equ LOADER_BASE_ADDR
-LOADER_START_SECTOR equ 0x2 ;LBA定义的逻辑地址,表示在第二扇区
-
+;---- kernel 宏参数 ----
 KERNEL_BIN_BASE_ADDR    equ 0x70000
 KERNEL_START_SECTOR     equ 0x9
 KERNEL_ENTRY_POINT      equ 0xc0001500
@@ -12,13 +11,10 @@ KERNEL_ENTRY_POINT      equ 0xc0001500
 PAGE_DIR_TABLE_POS      equ 0x100000 ;二级页目录表，页表放在内存中1M起始位置连续存放
 
 ;---- GDT 宏参数 ----
-; 段描述符属性
-; 符号名命名规则 DESC_字段名_字段相关信息
-; 例如 DESC_G_4K 表示段描述符的第55位G标号,也就是高32位的第23位 G=1时表示4K粒度
-DESC_G_4K               equ        0x01<<23                      ;4K粒度
-DESC_D_32               equ        0x01<<22                      ;表示32位操作位
+DESC_G_4K               equ        0x01<<23
+DESC_D_32               equ        0x01<<22
 DESC_L	                equ        0x00<<21
-DESC_AVL                equ        0_00000000000000000000b       ; 这个位没有实际意义
+DESC_AVL                equ        0_00000000000000000000b
 DESC_LIMIT_CODE2        equ        1111_0000000000000000b
 DESC_LIMIT_DATA2        equ        DESC_LIMIT_CODE2
 DESC_LIMIT_VIDEO2       equ        0000_000000000000000b
