@@ -4,9 +4,7 @@ section loader vstart=LOADER_BASE_ADDR
 LOADER_STACK_TOP equ LOADER_BASE_ADDR   ;栈区的起始地址,为什么是这个地址?
 jmp loader_start
 
-; --------------------------------- GDT 构建 ---------------------------------
-
-;构建gdt及其内部的描述符
+;;;; 全局描述符表 (Global Descriptor Table GDT) ;;;;
 ;全局描述符表GDT是一片内存区域,每隔8个字节便是一个表现,dd 可以定义一个4字节,下面定义方式是高,低两个4字节
 ; GDT的第0个描述符不可用
 GDT_BASE:
