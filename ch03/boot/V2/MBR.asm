@@ -10,7 +10,7 @@ SECTION MBR vstart=0x7c00
     mov ax,0xb800
     mov gs,ax
 
-;;;; 利用BIOS中断显示 ;;;;
+;;;; 利用BIOS中断清屏 ;;;;
     mov ax, 0x0600
     mov bx, 0x0700
     mov cx, 0
@@ -19,32 +19,35 @@ SECTION MBR vstart=0x7c00
 
 ; 在与显示有关的实地址上,直接写入数据的方式,显示数据
     mov byte [gs:0x00],'H'
-    mov byte [gs:0x01],0X07
+    mov byte [gs:0x01],0XA4
 
     mov byte [gs:0x02],'E'
-    mov byte [gs:0x03],0X07
+    mov byte [gs:0x03],0XA4
 
     mov byte [gs:0x04],'L'
-    mov byte [gs:0x05],0X07
+    mov byte [gs:0x05],0XA4
 
     mov byte [gs:0x06],'L'
-    mov byte [gs:0x07],0X07
+    mov byte [gs:0X07],0XA4
 
     mov byte [gs:0x08],'O'
-    mov byte [gs:0x09],0X07
+    mov byte [gs:0x09],0XA4
 
     mov byte [gs:0x0A],'M'
-    mov byte [gs:0x0B],0X07
+    mov byte [gs:0x0B],0XA4
 
     mov byte [gs:0x0C],'B'
-    mov byte [gs:0x0D],0X07
+    mov byte [gs:0x0D],0XA4
 
     mov byte [gs:0x0E],'R'
-    mov byte [gs:0x0F],0X07
+    mov byte [gs:0x0F],0XA4
 
 ; 以上的内容相当于一个路标,表示程序正常运行到此处了
+; dd 指令将 loader.bin 写入 hd.img 的第二扇区
 
+; MBR 程序决定了读取的第二扇区 0x200
    mov eax,LOADER_START_SECTOR
+; MBR 程序决定了读取扇区放到内存的0x900
    mov bx,LOADER_BASE_ADDR
    mov cx,4
    call rd_disk_m_16
