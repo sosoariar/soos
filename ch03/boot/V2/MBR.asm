@@ -45,36 +45,42 @@ SECTION MBR vstart=0x7c00
 ; 以上的内容相当于一个路标,表示程序正常运行到此处了
 ; dd 指令将 loader.bin 写入 hd.img 的第二扇区
 
-; MBR 程序决定了读取的第二扇区 0x200
+; MBR 程序决定了读取的起始扇区 0x200
    mov eax,LOADER_START_SECTOR
 ; MBR 程序决定了读取扇区放到内存的0x900
    mov bx,LOADER_BASE_ADDR
+; MBR 程序决定了读取扇区数量
    mov cx,4
+
    call rd_disk_m_16
 
    jmp LOADER_BASE_ADDR
 
 rd_disk_m_16:
       mov esi,eax
+      mov di,cx
 
-      mov di,cx		  ; 硬盘端口会从约定的该位置读取涉及的扇区数
+ ; 初始化硬件接口的地址,改地址和bochsrc.disk 的配置有关
+ ; ata0:enabled=1,ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ ; 与IO接口之间如何传参,根据实际的硬件要求送数, 在该程序中即如何往 0x1f2 ~ 0x1f7
 
-      mov dx,0x1f2         ; 初始化硬件接口的地址,改地址和bochsrc.disk 的配置有关, 指定位置需要什么参数,可以互联网检索得到
+ ; 设置硬盘读取的扇区数
+      mov dx,0x1f2
       mov al,cl
       out dx,al
 
+; 通知hd.img用LBA方式及哪些个内存地址交换数据
       mov eax,esi
-
-      mov dx,0x1f3         ; 初始化硬件接口的地址,改地址和bochsrc.disk 的配置有关, 指定位置需要什么参数,可以互联网检索得到
+      mov dx,0x1f3
       out dx,al
 
       mov cl,8
       shr eax,cl
-      mov dx,0x1f4          ; 初始化硬件接口的地址,改地址和bochsrc.disk 的配置有关, 指定位置需要什么参数,可以互联网检索得到
+      mov dx,0x1f4
       out dx,al
 
       shr eax,cl
-      mov dx,0x1f5          ; 初始化硬件接口的地址,改地址和bochsrc.disk 的配置有关, 指定位置需要什么参数,可以互联网检索得到
+      mov dx,0x1f5
       out dx,al
 
       shr eax,cl
@@ -83,7 +89,8 @@ rd_disk_m_16:
       mov dx,0x1f6
       out dx,al
 
-      mov dx,0x1f7          ; 改地址可以设置端口的读写方向
+; 向hd.img发出读命令
+      mov dx,0x1f7
       mov al,0x20
       out dx,al
 
