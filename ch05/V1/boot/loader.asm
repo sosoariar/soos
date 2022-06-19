@@ -28,9 +28,9 @@ VIDEO_DESC:
     dd    0x80000007	       ; limit=(0xbffff-0xb8000)/4k=0x7
     dd    DESC_VIDEO_HIGH4     ; 此时dpl为0
 
-GDT_SIZE        equ   $ - GDT_BASE
-GDT_LIMIT       equ   GDT_SIZE - 1
-times 60 dq 0                   ; 预留空间,方便后续更新代码段
+GDT_SIZE        equ   $-GDT_BASE
+GDT_LIMIT       equ   GDT_SIZE-1
+times 30 dq 0
 
 ; --------------------------------- GDT 构建 ---------------------------------
 ; selector 的宏功能参数初始化
@@ -43,10 +43,11 @@ SELECTOR_VIDEO  equ     (0x0003<<3) + TI_GDT + RPL0	    ; 同上
 ; 故total_mem_bytes内存中的地址是0xb00.将来在内核中咱们会引用此地址
 total_mem_bytes dd 0
 
-; 定义全局描述符表 GDT 的指针,此指针是 lgdt 加载 GDT 到 gdtr 寄存器时用的,
+; 定义全局描述符表 GDT 的指针,此指针是 lgdt 加载 GDT 到 gdtr 寄存器时用的
+; 以下两行供48位寄存器GDTR加载GDT表使用
 gdt_ptr
-    dw  GDT_LIMIT
-    dd  GDT_BASE
+    dw  GDT_LIMIT   ; 16 位GDT以字节的界限
+    dd  GDT_BASE    ; GDT 的32位起始地址
 
 ;定义一个缓冲区
 ;人工对齐:total_mem_bytes4字节+gdt_ptr6字节+ards_buf244字节+ards_nr2,共256字节
@@ -148,13 +149,14 @@ loader_start:
     or eax, 0x00000001
     mov cr0, eax
 
-    jmp dword SELECTOR_CODE:p_mode_start
+    jmp dword SELECTOR_CODE:loader_print_32
 
 .error_hlt:		      ;出错则挂起
    hlt
 
 [bits 32]
-p_mode_start:
+loader_print_32:
+
     mov ax, SELECTOR_DATA
     mov ds, ax
     mov es, ax
@@ -163,6 +165,19 @@ p_mode_start:
     mov ax, SELECTOR_VIDEO
     mov gs, ax
 
-    mov byte [gs:0x08],'R'
-    mov byte [gs:0x09],0xA4
+    mov byte [gs:0x0C],' '
+    mov byte [gs:0x0D],0X07
+
+    mov byte [gs:0x0E],' '
+    mov byte [gs:0x0F],0X07
+
+    mov byte [gs:0x10],'P'
+    mov byte [gs:0x11],0X07
+
+    mov byte [gs:0x12],'R'
+    mov byte [gs:0X13],0X07
+
+    mov byte [gs:0x14],'O'
+    mov byte [gs:0x15],0X07
+
     jmp $
