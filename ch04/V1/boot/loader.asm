@@ -94,19 +94,19 @@ loader_print_32:
     mov ax, SELECTOR_VIDEO
     mov gs, ax
 
-    mov byte [gs:0x00],'H'
-    mov byte [gs:0x01],0XA4
+    mov byte [gs:0x0C],' '
+    mov byte [gs:0x0D],0X07
 
-    mov byte [gs:0x02],'E'
-    mov byte [gs:0x03],0XA4
+    mov byte [gs:0x0E],' '
+    mov byte [gs:0x0F],0X07
 
-    mov byte [gs:0x04],'L'
-    mov byte [gs:0x05],0XA4
+    mov byte [gs:0x10],'P'
+    mov byte [gs:0x11],0X07
 
-    mov byte [gs:0x06],'L'
-    mov byte [gs:0X07],0XA4
+    mov byte [gs:0x12],'R'
+    mov byte [gs:0X13],0X07
 
-    mov byte [gs:0x08],'O'
-    mov byte [gs:0x09],0XA4
+    mov byte [gs:0x14],'O'
+    mov byte [gs:0x15],0X07
 
 jmp $

@@ -19,14 +19,17 @@ SECTION MBR vstart=0x7c00
 
 ; 在与显示有关的实地址上,直接写入数据的方式,显示数据
 
-    mov byte [gs:0x0A],'M'
-    mov byte [gs:0x0B],0XA4
+    mov byte [gs:0x00],'M'
+    mov byte [gs:0x01],0X07
 
-    mov byte [gs:0x0C],'B'
-    mov byte [gs:0x0D],0XA4
+    mov byte [gs:0x02],'B'
+    mov byte [gs:0x03],0X07
 
-    mov byte [gs:0x0E],'R'
-    mov byte [gs:0x0F],0XA4
+    mov byte [gs:0x04],'R'
+    mov byte [gs:0x05],0X07
+
+    mov byte [gs:0x06],'!'
+    mov byte [gs:0x07],0X07
 
 ; 以上的内容相当于一个路标,表示程序正常运行到此处了
 ; dd 指令将 loader.bin 写入 hd.img 的第二扇区
