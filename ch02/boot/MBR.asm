@@ -42,6 +42,6 @@ SECTION MBR vstart=0x7c00
 
    message db "Hello MBR!"
 
-
+; MBR 约定,必须写满 512Byte 且结尾是 0101 1010
    times 510-($-$$) db 0
    db 0x55,0xaa
