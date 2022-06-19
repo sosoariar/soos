@@ -1,1 +1,0 @@
- scp -r ./* root@192.168.1.9:/root/projects/OrangeOS/ch05

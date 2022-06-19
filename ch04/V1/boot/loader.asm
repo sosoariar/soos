@@ -34,9 +34,9 @@ VIDEO_DESC:
     dd    0x80000007
     dd    DESC_VIDEO_HIGH4
 
-GDT_SIZE        equ   $ - GDT_BASE
-GDT_LIMIT       equ   GDT_SIZE - 1
-times 30 dq 0                   ; 预留空间,方便后续更新代码段
+GDT_SIZE        equ   $-GDT_BASE
+GDT_LIMIT       equ   GDT_SIZE-1
+times 30 dq 0
 
 ;;;; 选择子 (Global Descriptor Table GDT) ;;;;
 ; (CODE_DESC - GDT_BASE)/8 + TI_GDT + RPL0
@@ -55,13 +55,13 @@ loadermsg db '2 loader in real.'
 
 loader_start:
 
-   mov	 sp, LOADER_BASE_ADDR
-   mov	 bp, loadermsg
-   mov	 cx, 19
-   mov	 ax, 0x1301
-   mov	 bx, 0x001f
-   mov	 dx, 0x1800
-   int	 0x10
+    mov	 sp, LOADER_BASE_ADDR
+    mov	 bp, loadermsg
+    mov	 cx, 19
+    mov	 ax, 0x1301
+    mov	 bx, 0x001f
+    mov	 dx, 0x1800
+    int	 0x10
 
 ;;;; 准备进入保护模式 ;;;;
 ; 1 打开 A20
@@ -69,19 +69,19 @@ loader_start:
 ; 3 将 CR0 的pe位置1
 
 ;;;;  打开A20  ;;;;
-in al,0x92
-or al,0000_0010B
-out 0x92,al
+    in al,0x92
+    or al,0000_0010B
+    out 0x92,al
 
 ;;;; 加载GDT ;;;;
-lgdt [gdt_ptr]
+    lgdt [gdt_ptr]
 
 ;;;; CR0 ;;;;
-mov eax, cr0
-or eax, 0x00000001
-mov cr0, eax
+    mov eax, cr0
+    or eax, 0x00000001
+    mov cr0, eax
 
-jmp dword SELECTOR_CODE:loader_print_32
+    jmp dword SELECTOR_CODE:loader_print_32
 
 [bits 32]
 loader_print_32:

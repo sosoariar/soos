@@ -1,7 +1,7 @@
 %include "boot.inc"
 
 section loader vstart=LOADER_BASE_ADDR
-LOADER_STACK_TOP equ LOADER_BASE_ADDR
+jmp loader_start
 
 ; --------------------------------- GDT 构建 ---------------------------------
 ; 构建gdt及其内部的描述符
@@ -53,6 +53,8 @@ gdt_ptr
 ;人工对齐:total_mem_bytes4字节+gdt_ptr6字节+ards_buf244字节+ards_nr2,共256字节
 ards_buf times 244 db 0
 ards_nr dw 0		      ;用于记录ards结构体数量
+
+loadermsg db '2 loader in real.'
 
 loader_start:
 
