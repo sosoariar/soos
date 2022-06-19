@@ -1,6 +1,8 @@
-; 功能: 在屏幕上显示字符
-SECTION MBR vstart=0x7c00 ; 源代码编译后在内存中的起始地址
-   mov ax,cs              ; CS:IP 默认是顺序执行的,同样这条指令也会顺序存储在0x7c00向上扩展的地址中
+;;;; 在屏幕上显示字符 ;;;;
+; 0x7c00 是一种规范,BIOS功能包含了加载MBR中代码代码到ox7c00, CS:IP 会被BIOS设置为0X7C00
+; MBR 的可执行代码逻辑在内存地址使用上需要以 0X7C00 为基础
+SECTION MBR vstart=0x7c00
+   mov ax,cs
    mov ds,ax
    mov es,ax
    mov ss,ax
