@@ -1,0 +1,22 @@
+# 机器内存: 32MB
+megs:32
+
+# 虚拟机 BIOS 程序的配置文件,物理机存储在 ROM 中
+romimage:file=/root/program/bochs/share/bochs/BIOS-bochs-latest
+
+# 虚拟机 BIOS VGA部分程序的配置文件,物理机存储在 ROM 中
+vgaromimage:file=/root/program/bochs/share/bochs/VGABIOS-lgpl-latest
+
+# 硬盘方式启动,另外 软盘,网络等读写配置是不同的
+boot:disk  
+
+# 在当前文件目录下打印日志
+log:bochs.out
+
+# 鼠标键盘配置
+mouse:enabled=0
+keyboard:keymap=/root/program/bochs/share/bochs/keymaps/x11-pc-us.map
+
+# IO端口
+ata0:enabled=1,ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master:type=disk, path="hd.img", mode=flat, cylinders=65, heads=16, spt=63
