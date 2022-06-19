@@ -30,7 +30,7 @@ VIDEO_DESC:
 
 GDT_SIZE        equ   $-GDT_BASE
 GDT_LIMIT       equ   GDT_SIZE-1
-times 30 dq 0
+times 60 dq 0
 
 ; --------------------------------- GDT 构建 ---------------------------------
 ; selector 的宏功能参数初始化
@@ -167,27 +167,34 @@ loader_print_32:
    or dword [ebx + 0x18 + 4], 0xc0000000
 
 ;将gdt的基址加上0xc0000000使其成为内核所在的高地址
-   add dword [gdt_ptr + 2], 0xc0000000
+    add dword [gdt_ptr + 2], 0xc0000000
 
-   add esp, 0xc0000000
-   mov eax, PAGE_DIR_TABLE_POS
-   mov cr3, eax
+    add esp, 0xc0000000
+    mov eax, PAGE_DIR_TABLE_POS
+    mov cr3, eax
 
 ; 打开cr0的pg位(第31位)
-   mov eax, cr0
-   or eax, 0x80000000
-   mov cr0, eax
+    mov eax, cr0
+    or eax, 0x80000000
+    mov cr0, eax
 
 ;在开启分页后,用gdt新的地址重新加载
-   lgdt [gdt_ptr]             ; 重新加载
+    lgdt [gdt_ptr]             ; 重新加载
 
-   mov byte [gs:160], 'V'
-   mov byte [gs:162], 'i'
-   mov byte [gs:164], 'r'
-   mov byte [gs:166], 't'
-   mov byte [gs:168], 'u'
-   mov byte [gs:170], 'a'
-   mov byte [gs:172], 'l'
+    mov byte [gs:0x0C],' '
+    mov byte [gs:0x0D],0X07
+
+    mov byte [gs:0x0E],' '
+    mov byte [gs:0x0F],0X07
+
+    mov byte [gs:0x10],'P'
+    mov byte [gs:0x11],0X07
+
+    mov byte [gs:0x12],'R'
+    mov byte [gs:0X13],0X07
+
+    mov byte [gs:0x14],'O'
+    mov byte [gs:0x15],0X07
 
    jmp $
 
