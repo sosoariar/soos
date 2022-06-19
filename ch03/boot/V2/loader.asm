@@ -44,4 +44,4 @@ mov byte [gs:0x35],0xA4
 mov byte [gs:0x36],'R'
 mov byte [gs:0x37],0xA4
 
-jmp $		       ; 通过死循环使程序悬停在此
+jmp $
