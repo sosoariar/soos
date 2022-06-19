@@ -18,20 +18,6 @@ SECTION MBR vstart=0x7c00
     int 0x10
 
 ; 在与显示有关的实地址上,直接写入数据的方式,显示数据
-    mov byte [gs:0x00],'H'
-    mov byte [gs:0x01],0XA4
-
-    mov byte [gs:0x02],'E'
-    mov byte [gs:0x03],0XA4
-
-    mov byte [gs:0x04],'L'
-    mov byte [gs:0x05],0XA4
-
-    mov byte [gs:0x06],'L'
-    mov byte [gs:0X07],0XA4
-
-    mov byte [gs:0x08],'O'
-    mov byte [gs:0x09],0XA4
 
     mov byte [gs:0x0A],'M'
     mov byte [gs:0x0B],0XA4

@@ -1,7 +1,7 @@
 %include "boot.inc"
 
 section loader vstart=LOADER_BASE_ADDR
-LOADER_STACK_TOP equ LOADER_BASE_ADDR   ;栈区的起始地址,为什么是这个地址?
+
 jmp loader_start
 
 ;;;; 全局描述符表 (Global Descriptor Table GDT) ;;;;
@@ -36,7 +36,7 @@ VIDEO_DESC:
 
 GDT_SIZE        equ   $ - GDT_BASE
 GDT_LIMIT       equ   GDT_SIZE - 1
-times 60 dq 0                   ; 预留空间,方便后续更新代码段
+times 30 dq 0                   ; 预留空间,方便后续更新代码段
 
 ;;;; 选择子 (Global Descriptor Table GDT) ;;;;
 ; (CODE_DESC - GDT_BASE)/8 + TI_GDT + RPL0
@@ -57,34 +57,35 @@ loader_start:
 
    mov	 sp, LOADER_BASE_ADDR
    mov	 bp, loadermsg
-   mov	 cx, 17
+   mov	 cx, 19
    mov	 ax, 0x1301
    mov	 bx, 0x001f
    mov	 dx, 0x1800
    int	 0x10
 
-;----   准备进入保护模式   ----
-;1 打开A20
-;2 加载gdt
-;3 将cr0的pe位置1
+;;;; 准备进入保护模式 ;;;;
+; 1 打开 A20
+; 2 加载 GDT
+; 3 将 CR0 的pe位置1
 
-;-----------------  打开A20  ----------------
+;;;;  打开A20  ;;;;
 in al,0x92
 or al,0000_0010B
 out 0x92,al
 
-;-----------------  加载GDT  ----------------
+;;;; 加载GDT ;;;;
 lgdt [gdt_ptr]
 
-;-----------------  cr0  ----------------
+;;;; CR0 ;;;;
 mov eax, cr0
 or eax, 0x00000001
 mov cr0, eax
 
-jmp dword SELECTOR_CODE:p_mode_start
+jmp dword SELECTOR_CODE:loader_print_32
 
 [bits 32]
-p_mode_start:
+loader_print_32:
+
     mov ax, SELECTOR_DATA
     mov ds, ax
     mov es, ax
@@ -93,6 +94,19 @@ p_mode_start:
     mov ax, SELECTOR_VIDEO
     mov gs, ax
 
-mov byte [gs:160], 'P'
+    mov byte [gs:0x00],'H'
+    mov byte [gs:0x01],0XA4
+
+    mov byte [gs:0x02],'E'
+    mov byte [gs:0x03],0XA4
+
+    mov byte [gs:0x04],'L'
+    mov byte [gs:0x05],0XA4
+
+    mov byte [gs:0x06],'L'
+    mov byte [gs:0X07],0XA4
+
+    mov byte [gs:0x08],'O'
+    mov byte [gs:0x09],0XA4
 
 jmp $
