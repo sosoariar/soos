@@ -1,0 +1,1 @@
+scp -r ./* root@192.168.1.11:/root/projects/OrangeOS/ch02
