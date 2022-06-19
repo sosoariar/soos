@@ -3,7 +3,6 @@ LOADER_BASE_ADDR        equ 0x900
 LOADER_STACK_TOP        equ LOADER_BASE_ADDR
 LOADER_START_SECTOR     equ 0x2
 
-PAGE_DIR_TABLE_POS      equ 0x100000 ;二级页目录表，页表放在内存中1M起始位置连续存放
 
 ;---- GDT 宏参数 ----
 DESC_G_4K               equ        0x01<<23
@@ -46,3 +45,5 @@ PG_RW_R	 equ  00b
 PG_RW_W	 equ  10b
 PG_US_S	 equ  000b
 PG_US_U	 equ  100b
+
+PAGE_DIR_TABLE_POS      equ 0x100000 ;二级页目录表，页表放在内存中1M起始位置连续存放
